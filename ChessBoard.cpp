@@ -504,7 +504,7 @@ void ChessBoard::calculate_path_parameters(int old_row, int old_column, int new_
     
     row_step = (new_row - old_row)/abs(old_row - new_row);
     gradient = (new_row - old_row)/(new_column - old_column);                                        //Calculates how the column number changes with row number
-    path_len = sqrt( pow((old_row - new_row), 2.0)+ pow((old_column - new_column), 2.0))/sqrt(2.0);  //Finds the Euclidean distance between cells and adjusts it
+    path_len = sqrt( pow((old_row - new_row), 2.0)+ pow((old_column - new_column), 2.0))/sqrt(2.0);  //Calculates a Euclidean distance between cells and adjusts it
                                                                                                      //to calculate the number of cells using Pythagoras' theorem
   }
 
