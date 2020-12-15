@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "piece.h"
+#include "ChessPiece.h"
 
 #define SIZE 8
 
@@ -13,6 +13,8 @@ class ChessBoard{
   int turn_count = 0;
   int king_coordinates[2][2];
   const char* colours[2] = {"White", "Black"};
+  bool checkmate = false;
+  bool is_stalemate = false;
   
 public:
 
