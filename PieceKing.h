@@ -10,8 +10,11 @@ using namespace std;
 class King: public Piece{
 
 public:
+  
   King(int colour);
+  
   bool validate_move(int old_row, int old_column, int new_row, int new_column, bool eats);
+  
   ~King();
 };
 

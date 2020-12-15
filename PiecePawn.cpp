@@ -22,9 +22,12 @@ bool Pawn::validate_move(int old_row, int old_column, int new_row, int new_colum
     return attack(old_row, old_column, new_row, new_column);
   
   if(colour == 1){
+    
     if(old_row == starting_position[0] && old_column == starting_position[1]){
+      
       if(old_column == new_column && (new_row == old_row + 1 || new_row == old_row + 2)){
 	return true;
+	
       }
     
     }else if(old_column == new_column && (new_row == old_row + 1)){
@@ -37,8 +40,11 @@ bool Pawn::validate_move(int old_row, int old_column, int new_row, int new_colum
   }
 
   if(old_row == starting_position[0] && old_column == starting_position[1]){
+    
     if(old_column == new_column && (new_row == old_row - 1 || new_row == old_row - 2)){
+      
       return true;
+      
     }
     
   }else if(old_column == new_column && (new_row == old_row - 1)){

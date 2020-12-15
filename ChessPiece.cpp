@@ -1,3 +1,5 @@
+/*C++ coursework 3 Name: Ivan Gorshkov Date: 15.12.2020 */
+
 #include<iostream>
 #include"ChessPiece.h"
 #include<string.h>
