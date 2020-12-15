@@ -79,6 +79,7 @@ void ChessBoard::setupBoard(){
 void ChessBoard::resetBoard(){
 
   for(int row = 0; row < SIZE; row++){
+    
     for(int column = 0; column < SIZE; column++){
       
       if(board[row][column] != NULL){
@@ -135,11 +136,13 @@ void ChessBoard::convertToInt(int from[], int to[], const char* currentPosition,
   
   if(currentPosition[0] > 64 && currentPosition[0] < 91)
     from[0] = currentPosition[0] - 65;
+  
   else
     from[0] = currentPosition[0] - 97;
   
   if(newPosition[0] > 64 && newPosition[0] < 91)
     to[0] = newPosition[0] - 65;
+  
   else
     to[0] = newPosition[0] - 97;
   
@@ -151,13 +154,17 @@ void ChessBoard::convertToInt(int from[], int to[], const char* currentPosition,
 void ChessBoard::submitMove(const char* currentPosition, const char* newPosition){
 
   if(!(is_check(0, king_coordinates[0][0], king_coordinates[0][1])) && stalemate(0)){      //Stalemate check
+
     cout << colours[0] << " is in stalemate. The game ends as a draw" << endl;
     is_stalemate = true;
+    
   }
   
   if(!(is_check(1, king_coordinates[1][0], king_coordinates[1][1])) && stalemate(1)){
+
     cout << colours[1] << " is in stalemate. The game ends as a draw" << endl;
     is_stalemate = true;
+    
   }
   
   if(!checkmate && !is_stalemate){                                                         //Attempts to move is there is no checkmate or stalemate
@@ -179,11 +186,13 @@ void ChessBoard::submitMove(const char* currentPosition, const char* newPosition
       new_column = to[0];
       
       if(board[old_row][old_column] != NULL){
+	
 	if(check_bounds(old_row, old_column, new_row, new_column) && turn_to_move(old_row, old_column)){
 
 	  move(old_row, old_column, new_row, new_column, currentPosition, newPosition);
     
 	}
+	
       }else{
 
 	cerr << "There is no piece at position " << currentPosition << "!" << endl;
@@ -191,8 +200,11 @@ void ChessBoard::submitMove(const char* currentPosition, const char* newPosition
       }
 
     }
+    
   }else{
+    
     cout << "The game has ended! Please reset the board in order to play again!" << endl;
+    
   }
   
   
@@ -201,20 +213,23 @@ void ChessBoard::submitMove(const char* currentPosition, const char* newPosition
 bool ChessBoard::turn_to_move(int row, int column){
 
   if(board[row][column]->get_colour() == 0 && turn_count % 2 != 0){
+    
     cerr << "It is not White's turn to move!" << endl;
     return false;
+    
   }
 
   if(board[row][column]->get_colour() == 1 && turn_count % 2 == 0){
+    
     cerr << "It is not Black's turn to move!" << endl;
     return false;
+    
   }
 
   return true;
 }
 
 void ChessBoard::move(int old_row, int old_column, int new_row, int new_column, const char* currentPosition, const char* newPosition){
-
     
   bool legal_piece_move;
   bool free_path;
@@ -233,12 +248,17 @@ void ChessBoard::move(int old_row, int old_column, int new_row, int new_column, 
     free_path = check_path(old_row, old_column, new_row, new_column);                                                 //Check whether the path free
     
     if(legal_piece_move && free_path){
+      
       if(!simulate_move(moving_colour, old_row, old_column, new_row, new_column)){                                    //Simulates a move to test whether is leads to check
+
 	cout << colours[moving_colour] << "'s " << moving_piece_name  <<" moves from " << currentPosition << " to " << newPosition << endl;
 	move_to_free_cell(old_row, old_column, new_row, new_column);                                                  
 	move_happened = true;
+	
       }else{
+	
 	cout << colours[moving_colour] <<"'s " << moving_piece_name << " cannot move to " << newPosition  << "!" << " It leads to check "  << endl;
+	
       }
       
     }else{
@@ -251,6 +271,7 @@ void ChessBoard::move(int old_row, int old_column, int new_row, int new_column, 
     free_path = check_path(old_row, old_column, new_row, new_column);
     
     if(legal_piece_move && free_path && board[new_row][new_column]->get_colour() == rival_colour && board[new_row][new_column]->get_name() != "King"){
+      
        if(!simulate_move(moving_colour, old_row, old_column, new_row, new_column)){
 
 	 cout << colours[moving_colour] << "'s " << moving_piece_name  <<" moves from " << currentPosition << " to " << newPosition;
@@ -261,11 +282,15 @@ void ChessBoard::move(int old_row, int old_column, int new_row, int new_column, 
 	 move_happened = true;
 
        }else{
+	 
 	cout << colours[moving_colour] <<"'s " << moving_piece_name << " cannot move to " << newPosition  << "!" << " It leads to check "  << endl;
+	
       }
           
     }else{
+      
       cout << colours[moving_colour] <<"'s " << board[old_row][old_column]->get_name() << " cannot move to " << newPosition  << "!"  <<endl;
+      
       if (board[new_row][new_column]->get_name() == "King"){
 
 	cout << "King can't be eaten!" << endl;
@@ -284,8 +309,10 @@ void ChessBoard::move(int old_row, int old_column, int new_row, int new_column, 
   }
 
   if(move_happened){
+    
     check_or_checkmate(rival_colour);
     turn_count++;
+    
   }
 }
 
@@ -307,6 +334,7 @@ bool ChessBoard::check_or_checkmate(int colour){
       
       cout << colours[colour] <<" is in checkmate" << endl;
       checkmate = true;
+      
       return true;
     }
     
@@ -373,6 +401,7 @@ bool ChessBoard::stalemate_try_move(int colour, int old_row, int old_column){
     for(int new_column = 0; (new_column < SIZE) && check; new_column++){
 
       if(board[new_row][new_column] == NULL || (board[new_row][new_column]-> get_colour() != colour && board[new_row][new_column]-> get_name() != "King")){
+	
 	if(board[new_row][new_column] == NULL){
 	
 	  eat = false;
@@ -507,11 +536,16 @@ bool ChessBoard::check_path(int old_row, int old_column, int new_row, int new_co
 
     coordinates[0] = coordinates[0] + row_step;
     coordinates[1] = coordinates[1] + gradient * row_step + column_step;
+    
     if(board[coordinates[0]][coordinates[1]] != NULL){
+      
       if(blocking_piece != NULL){
+	
 	blocking_piece[0] = coordinates[0];
 	blocking_piece[1] = coordinates[1];
+	
       }
+      
       return false;
 
     }
@@ -533,6 +567,7 @@ bool ChessBoard::validate_check(int colour, int row, int column, int last_row, i
   free_path = check_path(row, column, last_row, last_column, blocking_piece);   //Checks if there is a piece on kings row, column or diogonal and returns it 
 
   if(!free_path && (board[blocking_piece[0]][blocking_piece[1]]->get_colour() != colour)){
+    
     if(board[blocking_piece[0]][blocking_piece[1]]->validate_move(blocking_piece[0], blocking_piece[1], row, column, true)){  //Checks if king can be attacked
       
       return true;
@@ -540,7 +575,8 @@ bool ChessBoard::validate_check(int colour, int row, int column, int last_row, i
   }
 
   if(free_path && (board[last_row][last_column] != NULL) && (board[last_row][last_column] ->get_colour() != colour)){         //Checks if king can be attacked from the 
-    if(board[last_row][last_column]->validate_move(last_row, last_column, row, column, true)){                                //Last cell of the specified row, column or diagonal
+                                                                                                                              //Last cell of the specified row, column or diagonal
+    if(board[last_row][last_column]->validate_move(last_row, last_column, row, column, true)){                               
 
       return true;
     }
@@ -555,7 +591,7 @@ bool ChessBoard::is_check(int colour, int row, int column, int blocking_piece[])
   
   
   
-  /*=============== Checking Row ===================*/
+  /*=============== Checking Row ========================*/
   if(validate_check(colour, row, column, SIZE - 1, column, blocking_piece)){
 
     return true;
@@ -582,8 +618,8 @@ bool ChessBoard::is_check(int colour, int row, int column, int blocking_piece[])
    
   /*================= Checking Diagonal ===================*/
   
-  int delta = min(SIZE - 1 - row, SIZE - 1 - column);      //checks whether King's row or column is closer to the board end, and based on this
-  int last_row = row + delta;                              //Indentifies the final cell of the King's diagonal
+  int delta = min(SIZE - 1 - row, SIZE - 1 - column);      //Checks whether King's row or column is closer to the board end, and based on this
+  int last_row = row + delta;                              //indentifies the final cell of the King's diagonal
   int last_column = column + delta;
   
   if(validate_check(colour, row, column, last_row, last_column, blocking_piece)){
