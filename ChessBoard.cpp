@@ -167,7 +167,7 @@ void ChessBoard::submitMove(const char* currentPosition, const char* newPosition
     
   }
   
-  if(!checkmate && !is_stalemate){                                                         //Attempts to move is there is no checkmate or stalemate
+  if(!checkmate && !is_stalemate){                                                         //Attempts to move if there is no checkmate or stalemate
   
     int from[2];
     int to[2];  
@@ -245,11 +245,11 @@ void ChessBoard::move(int old_row, int old_column, int new_row, int new_column, 
   if(board[new_row][new_column] == NULL){                                //Attempts to move to an empty cells
     
     legal_piece_move = board[old_row][old_column]-> validate_move(old_row, old_column, new_row, new_column, false);   //Checks that the rules allow this move
-    free_path = check_path(old_row, old_column, new_row, new_column);                                                 //Check whether the path free
+    free_path = check_path(old_row, old_column, new_row, new_column);                                                 //Checks whether the path is free
     
     if(legal_piece_move && free_path){
       
-      if(!simulate_move(moving_colour, old_row, old_column, new_row, new_column)){                                    //Simulates a move to test whether is leads to check
+      if(!simulate_move(moving_colour, old_row, old_column, new_row, new_column)){                                    //Simulates a move to test whether it leads to check
 
 	cout << colours[moving_colour] << "'s " << moving_piece_name  <<" moves from " << currentPosition << " to " << newPosition << endl;
 	move_to_free_cell(old_row, old_column, new_row, new_column);                                                  
@@ -300,7 +300,7 @@ void ChessBoard::move(int old_row, int old_column, int new_row, int new_column, 
     
   }
 
-  if(move_happened && board[new_row][new_column]-> get_name() == "King"){   //If King moved, updates, its coordinates
+  if(move_happened && board[new_row][new_column]-> get_name() == "King"){   //If King was moved, updates its coordinates
 
     king_coordinates[moving_colour][0] = new_row;
     king_coordinates[moving_colour][1] = new_column;
@@ -379,7 +379,7 @@ bool ChessBoard::stalemate(int colour){
       
       if(board[old_row][old_column] != NULL && board[old_row][old_column]-> get_colour() == colour){
 
-	check = stalemate_try_move(colour, old_row, old_column);            //Attempts to move a found piece
+	check = stalemate_try_move(colour, old_row, old_column);            //Attempts to move to a found piece
 
       }
       
@@ -396,7 +396,7 @@ bool ChessBoard::stalemate_try_move(int colour, int old_row, int old_column){
   bool check = true;
   bool eat;
   
-  for(int new_row = 0; (new_row < SIZE) && check; new_row++){           //Goes through all cells a attempts to move the piece of the specified colour from its old coordinates 
+  for(int new_row = 0; (new_row < SIZE) && check; new_row++){           //Goes through all cells and attempts to move the piece of the specified colour from its old coordinates 
 
     for(int new_column = 0; (new_column < SIZE) && check; new_column++){
 
@@ -504,8 +504,8 @@ void ChessBoard::calculate_path_parameters(int old_row, int old_column, int new_
     
     row_step = (new_row - old_row)/abs(old_row - new_row);
     gradient = (new_row - old_row)/(new_column - old_column);                                        //Calculates how the column number changes with row number
-    path_len = sqrt( pow((old_row - new_row), 2.0)+ pow((old_column - new_column), 2.0))/sqrt(2.0);  //Finds the euclidean distance between cells and adjusts it
-                                                                                                     //to calculate the number of cells using Pythagora's theorem
+    path_len = sqrt( pow((old_row - new_row), 2.0)+ pow((old_column - new_column), 2.0))/sqrt(2.0);  //Finds the Euclidean distance between cells and adjusts it
+                                                                                                     //to calculate the number of cells using Pythagoras' theorem
   }
 
 
@@ -527,7 +527,7 @@ bool ChessBoard::check_path(int old_row, int old_column, int new_row, int new_co
     
   rem = remainder(path_len, 1.0);
   
-  if(rem != 0.0 || rem != -0.0){                //Only Knight can jump over the number of cells that is not whole 
+  if(rem != 0.0 || rem != -0.0){                //Only a Knight can jump over the number of cells that is not whole the number 
     return true;
 
   }  
@@ -568,13 +568,13 @@ bool ChessBoard::validate_check(int colour, int row, int column, int last_row, i
 
   if(!free_path && (board[blocking_piece[0]][blocking_piece[1]]->get_colour() != colour)){
     
-    if(board[blocking_piece[0]][blocking_piece[1]]->validate_move(blocking_piece[0], blocking_piece[1], row, column, true)){  //Checks if king can be attacked
+    if(board[blocking_piece[0]][blocking_piece[1]]->validate_move(blocking_piece[0], blocking_piece[1], row, column, true)){  //Checks if King can be attacked
       
       return true;
     }
   }
 
-  if(free_path && (board[last_row][last_column] != NULL) && (board[last_row][last_column] ->get_colour() != colour)){         //Checks if king can be attacked from the 
+  if(free_path && (board[last_row][last_column] != NULL) && (board[last_row][last_column] ->get_colour() != colour)){         //Checks if King can be attacked from the 
                                                                                                                               //Last cell of the specified row, column or diagonal
     if(board[last_row][last_column]->validate_move(last_row, last_column, row, column, true)){                               
 
@@ -694,7 +694,7 @@ bool ChessBoard::Checkmate(int king_row, int king_column, int attacking_piece[])
   int new_row;
   int new_column;
   
-  for(int i = -1; i < 2; i = i + 2){                    //Tries to move King to quit check
+  for(int i = -1; i < 2; i = i + 2){                    //Tries to move a King to quit check
 
     new_row = king_row + i;
     new_column = king_column + i;
@@ -722,7 +722,7 @@ bool ChessBoard::Checkmate(int king_row, int king_column, int attacking_piece[])
   int attacking_column = attacking_piece[1];
   bool check;
 
-  for(int row = 0; row < SIZE; row++){                  //Goes through the board and tries to find pieces that can eat the piece that put king in check
+  for(int row = 0; row < SIZE; row++){                  //Goes through the board and tries to find pieces that can eat the piece that put the King in check
 
     for(int column = 0; column < SIZE; column++){
 
@@ -761,7 +761,7 @@ bool ChessBoard::Checkmate(int king_row, int king_column, int attacking_piece[])
   
   calculate_path_parameters(attacking_row, attacking_column, king_row, king_column, gradient, column_step, row_step, path_len); 
     
-  for(float move_count = 0; move_count < path_len - 1; move_count++){        //Goes through the path between the King and attacking figure and tries to put pieces on it
+  for(float move_count = 0; move_count < path_len - 1; move_count++){        //Goes through the path between the King and the attacking piece and tries to put pieces on it
 
     path_row = path_row + row_step;
     path_column = path_column + gradient * row_step + column_step;

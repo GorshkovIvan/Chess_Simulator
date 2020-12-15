@@ -12,7 +12,7 @@ class Piece{
 
 protected:
   
-  int colour;   //Every piece has name and colour
+  int colour;   //Every piece has a name and a colour
   string name;
   
 public:
@@ -21,7 +21,7 @@ public:
   Piece(int colour);
 
   
-  /*Virtual function that every piece uses to validate its moves */
+  /*Virtual function that every piece uses to validate its moves, eats is true if a piece attempts to eat anoter piece*/
   virtual bool validate_move(int old_row, int old_column, int new_row, int new_column, bool eats) = 0;
 
   

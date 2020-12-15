@@ -24,7 +24,7 @@ public:
   ChessBoard(); 
   
 
-  /*Puts board piece on their initial positions. Call from the constructor and resetBoard functions*/
+  /*Puts chess pieces on their initial positions. Called from the constructor and resetBoard functions*/
   void setupBoard();
   
   
@@ -44,7 +44,7 @@ public:
   bool turn_to_move(int row, int column);
 
   
-  /*Checks if coordinates submitted by the user are inside the board*/
+  /*Checks if coordinates submitted by the user are inside the boundaries of the board*/
   bool check_bounds(int old_row, int old_column, int new_row, int new_column);
 
   
@@ -52,11 +52,11 @@ public:
   bool check_bounds(int row, int column);
 
   
-  /*Simulates a move by temporarily moving a piece of colour "colour" from its old position to a new one */
+  /*Simulates a move by temporarily moving a piece of the input from its old position to a new one */
   bool simulate_move(int colour, int old_row, int old_column, int new_row, int new_column);
 
   
-  /*Moves a piece if all rules are statisfied, if not, returns warnings*/
+  /*Moves a piece if all rules are statisfied, if not, prints warnings*/
   void move(int old_row, int old_column, int new_row, int new_column, const char* currentPosition, const char* newPosition);
 
   
@@ -66,15 +66,15 @@ public:
 
   
   /*is_check function specifies rows, columns and diagonals that should be tested for checking piece and validate_checks tests whether pieces located */
-  /*there can actually attacl the King*/
+  /*there can actually attack the King*/
   bool validate_check(int colour, int row, int column, int last_row, int last_column, int blocking_piece[]);
 
   
-  /*Call is_check and Checkmate function after a move was made*/
+  /*Call is_check and Checkmate functions after a move was made*/
   bool check_or_checkmate(int colour);
 
   
-  /*Checks whether a "colour" is in stalemate before every move*/
+  /*Checks whether a side with the input colour is in stalemate before every move*/
   bool stalemate(int colour);
 
   
@@ -86,7 +86,7 @@ public:
   void move_to_free_cell(int old_row, int old_column, int new_row, int new_column);
 
   
-  /*Rests the board by deleting all pieces that the board array was previously pointing to and setting news ones to their initial positions*/
+  /*Resets the board by deleting all pieces that the board array was previously pointing to and setting news ones to their initial positions*/
   void resetBoard();
 
   
@@ -94,16 +94,16 @@ public:
   bool Checkmate(int king_row, int king_column, int attacking_piece[]);
 
   
-  /*Called from Checkmate fuction, attempts to move a King to quit check. Returns false if managed to quit check.*/
+  /*Called from the Checkmate fuction, attempts to move a King to quit check. Returns false if managed to quit check.*/
   bool tryQuitCheck(int king_row, int king_column, int new_row, int new_column);
 
   
-  /*Takes two coordinates and determines whether there is a piece between them, if path is free returns true, optional paramter blocking_piece*/
-  /*holds the coordinates of the first piece that blocks the path between old and new cell*/
+  /*Takes two coordinates and determines whether there is a piece between them, if path is free returns true. Optional paramter blocking_piece*/
+  /*holds the coordinates of the first piece that blocks the path between the old and new cells*/
   bool check_path( int old_row, int old_column, int new_row, int new_column, int blocking_piece[] = NULL);
 
   
-  /*Helper function used in check_path and Checkamte, to calculate parameters need to find a way between two cells*/
+  /*Helper function used in check_path and Checkamte, to calculate parameters needed to find a path between two cells*/
   void calculate_path_parameters(int old_row, int old_column, int new_row, int new_column, int &gradient, int &column_step, int &row_step, float &path_len);
 
   
