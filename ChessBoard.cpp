@@ -61,6 +61,8 @@ void ChessBoard::setupBoard(){
 
   }
 
+  cout << "A new chess game is started!" << endl;
+  
 }
 
 
@@ -81,8 +83,6 @@ void ChessBoard::resetBoard(){
   }
 
   setupBoard();
-
-  cout << "A new chess game is started!" << endl;
 
 }
 
